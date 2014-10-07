@@ -20,7 +20,7 @@ Limitations
 
 ### Command line input options
 
-* input_file -> This is your sync file from the Popoolation2 pipeline. The format should look like this
+* input_file -> This is your sync file from the Popoolation2 pipeline. The format should look like this:
   scaffold_0	1	N	0:2:0:0:0:0	0:4:0:0:0:0
   scaffold_0	2	N	7:0:0:0:0:0	5:0:0:0:0:0
   scaffold_0	3	N	0:12:12:0:0:0	0:13:5:0:0:0
