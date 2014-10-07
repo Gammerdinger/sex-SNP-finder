@@ -20,8 +20,12 @@ Limitations
 
 ### Command line input options
 
-* input_file -> This is your sync file from the Popoolation2 pipeline. The format should look like this:
-    
+* input_file -> input_file.sync -> This is your sync file from the Popoolation2 pipeline. The format should look like this (You do not need to have the reference genome loaded into the 3rd column. Sex_SNP_Finder.pl does utilize reference genome information):
+    *Column 1 -> Scaffold/Contig
+    *Column 2 -> Position
+    *Column 3 -> Reference genome base
+    *Column 4 -> Pool1 A:T:C:G:Del:N
+    *Column 5 -> Pool2 A:T:C:G:Del:N
 ```
     scaffold_0	1	N	0:2:0:0:0:0	0:4:0:0:0:0
     scaffold_0	2	N	7:0:0:0:0:0	5:0:0:0:0:0
@@ -35,6 +39,20 @@ Limitations
     scaffold_0	10	N	38:2:0:0:0:0	27:7:0:0:0:0
 ```
 
-* --output_file -> This will be your output file from Sex_SNP_finder.pl 
+* --output_file -> output_file.igv -> This will be your IGV output file from Sex_SNP_finder.pl 
+    *Column 1 -> Scaffold
+    *Column 2 -> Start Position
+    *Column 3 -> End Position
+    *Column 4 -> Feature
+    *Column 5 -> Frequency of SNP in non-fixed pool
+        *We are looking for sites fixed in pool2 that are in an intermediate frequency (0.3-0.7) in pool1
+        *Look at position 7 on scaffold_0
+        *This position is fixed in pool2 for Thymine, but in pool1 1/3 of the positions have a Adenine and 2/3 have a Thymine
+
+    
+``` 
+    scaffold_0	7	8	snp	0.333333333333333
+```
+
 * 
 *
