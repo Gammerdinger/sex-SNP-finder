@@ -22,6 +22,7 @@ Limitations
 
 * input_file -> This is your sync file from the Popoolation2 pipeline. The format should look like this:
     
+```
     scaffold_0	1	N	0:2:0:0:0:0	0:4:0:0:0:0
     scaffold_0	2	N	7:0:0:0:0:0	5:0:0:0:0:0
     scaffold_0	3	N	0:12:12:0:0:0	0:13:5:0:0:0
@@ -32,6 +33,7 @@ Limitations
     scaffold_0	8	N	30:0:0:0:0:0	25:0:0:0:0:0
     scaffold_0	9	N	0:0:1:34:0:0	0:2:0:26:0:0
     scaffold_0	10	N	38:2:0:0:0:0	27:7:0:0:0:0
+```
 
 * --output_file -> This will be your output file from Sex_SNP_finder.pl 
 * 
