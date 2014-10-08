@@ -58,8 +58,8 @@ Limitations
    - Column 1 -> Scaffold
    - Column 2 -> Window start position
    - Column 3 -> Window end position
-   - Column 4 -> Number of Sex_SNP_finder.pl SNPs found in this windpw
-      *Note: The first window is much larger than the next two windows. This is because the first two rows fail to meet the read depth criteria.
+   - Column 4 -> Number of Sex_SNP_finder.pl SNPs found in this window
+      * Note: The first window is much larger than the next two windows. This is because the first two rows fail to meet the read depth criteria.
 ```
    scaffold_0	1	4	0
    scaffold_0	5	6	0
