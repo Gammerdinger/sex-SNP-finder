@@ -1,4 +1,4 @@
-sex_SNP_finder
+Sex_SNP_finder
 ==============
 Background
 --------------
