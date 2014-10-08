@@ -12,11 +12,14 @@ This software is built off of the synchronized (.sync) file created in popoolati
 
 Features
 
--Able to find positions that are fixed or nearly fixed in one pool and within an assigned frequency in a different pool. -Provides a non-overlapping window approach which can help identify regions that are the most dense of the SNPs that meet the parameters -Provides a modified calculation of Fst from the one provided in Popoolation2. Popoolation 2 does not include deletions in its calculation of Fst.
+* Able to find positions that are fixed or nearly fixed in one pool and within an assigned frequency in a different pool.
+* Provides a non-overlapping window approach which can help identify regions that are the most dense of the SNPs that meet the parameters
+* Provides a modified calculation of Fst from the one provided in Popoolation2. Popoolation 2 does not include deletions in its calculation of Fst.
 
 Limitations
 
--Popoolation2 provides a sliding window function for calculating Fst. Sex_SNP_finder.pl currently only calculates Fst for polymorphic bases and does not use windowing in its Fst calculation. -Sex_SNP_finder.pl assumes a biallelic model. In other words, if your homogametic pool was fixed for adenine and your homogametic pool, with frequency thresholds of 0.3 to 0.7, had 0.5 adenine, 0.25 thymine and 0.25 guanine, this SNP would get called. Currently, we are addressing this situation, but in our data sets, this includes only a very small subset of sites called.
+* Popoolation2 provides a sliding window function for calculating Fst. Sex_SNP_finder.pl currently only calculates Fst for polymorphic bases and does not use windowing in its Fst calculation. 
+* Sex_SNP_finder.pl assumes a biallelic model. In other words, if your homogametic pool was fixed for adenine and your homogametic pool, with frequency thresholds of 0.3 to 0.7, had 0.5 adenine, 0.25 thymine and 0.25 guanine, this SNP would get called. Currently, we are addressing this situation, but in our data sets, this includes only a very small subset of sites called.
 
 ### Command line input options
 
