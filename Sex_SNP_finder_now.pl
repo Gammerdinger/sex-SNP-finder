@@ -16,11 +16,11 @@ use Pod::Usage;
  
 =head1 DESCRIPTION
  
- Sex_SNP_finder_now.pl was a derivation from Sex_SNP_finder.pl. It is designed to look for regions of differentiation using a sliding window approach. Sex_SNP_finder_now.pl was designed to find nucleotides that were fixed at a site in one population and polymorphic at the same site in a different population. Initially, the program was used to compare between males and females, in order to find mutations responsible for sex-determination. However, it is applicable to any population where one nucleotide is fixed in one population and polymorphic in the other.
+ Sex_SNP_finder_now.pl was a derivation from Sex_SNP_finder.pl. It is designed to look for regions of differentiation using a non overlapping window approach. Sex_SNP_finder_now.pl was designed to find nucleotides that were fixed at a site in one population and polymorphic at the same site in a different population. Initially, the program was used to compare between males and females, in order to find mutations responsible for sex-determination. However, it is applicable to any population where one nucleotide is fixed in one population and polymorphic in the other.
  
 =head1 EXAMPLE
  
- The format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --sliding_window_output_file=sliding_window_output_file [--help|-?]\n\n
+ The format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.txt [--help|-?]\n\n
  
 =head1 VERSION
  
@@ -37,31 +37,31 @@ use Pod::Usage;
 =cut
 
 
-my ($input_file, $output_file, $fixed_population, $fixed_threshold, $minimum_polymorphic_frequency, $maximum_polymorphic_frequency, $read_depth, $window_size, $sliding_window_output_file, $help) = ("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty");
+my ($input_file, $output_file, $fixed_population, $fixed_threshold, $minimum_polymorphic_frequency, $maximum_polymorphic_frequency, $read_depth, $window_size, $non_overlapping_window_output_file, $help) = ("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty");
 
 GetOptions(
-"input_file=s"                     => \$input_file,
-"output_file=s"                    => \$output_file,
-"fixed_population=s"               => \$fixed_population,
-"fixed_threshold=s"                => \$fixed_threshold,
-"minimum_polymorphic_frequency=s"  => \$minimum_polymorphic_frequency,
-"maximum_polymorphic_frequency=s"  => \$maximum_polymorphic_frequency,
-"read_depth=s"                     => \$read_depth,
-"window_size=s"                    => \$window_size,
-"sliding_window_output_file=s"     => \$sliding_window_output_file,
-"help|?"                           => \$help
+"input_file=s"                          => \$input_file,
+"output_file=s"                         => \$output_file,
+"fixed_population=s"                    => \$fixed_population,
+"fixed_threshold=s"                     => \$fixed_threshold,
+"minimum_polymorphic_frequency=s"       => \$minimum_polymorphic_frequency,
+"maximum_polymorphic_frequency=s"       => \$maximum_polymorphic_frequency,
+"read_depth=s"                          => \$read_depth,
+"window_size=s"                         => \$window_size,
+"non_overlapping_window_output_file=s"  => \$non_overlapping_window_output_file,
+"help|?"                                => \$help
 ) or Usage ( "Invalid command-line option.");
 
 Usage() if defined $help;
 
-if ($input_file eq "empty" || $output_file eq "empty" || $fixed_population eq "empty" || $fixed_threshold eq "empty" || $minimum_polymorphic_frequency eq "empty" || $maximum_polymorphic_frequency eq "empty" || $read_depth eq "empty" || $window_size eq "empty" || $sliding_window_output_file eq "empty"){
-    die "\nERROR: The format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --sliding_window_output_file=sliding_window_output_file [--help|-?]\n\nOne or more of your option fields is empty.\n\nFor more information, use the command perldoc Sex_SNP_finder_now.pl\n\n"
+if ($input_file eq "empty" || $output_file eq "empty" || $fixed_population eq "empty" || $fixed_threshold eq "empty" || $minimum_polymorphic_frequency eq "empty" || $maximum_polymorphic_frequency eq "empty" || $read_depth eq "empty" || $window_size eq "empty" || $non_overlapping_window_output_file eq "empty"){
+    die "\nERROR: The format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.txt [--help|-?]\n\nOne or more of your option fields is empty.\n\nFor more information, use the command perldoc Sex_SNP_finder_now.pl\n\n"
 }
 
 open (my $INPUT, "<$input_file");
 
 open (my $OUTPUT, ">$output_file");
-open (my $SL_OUTPUT, ">$sliding_window_output_file");
+open (my $SL_OUTPUT, ">$non_overlapping_window_output_file");
 
 
 print "Your fixed population is ", $fixed_population, ".\n";
@@ -117,25 +117,24 @@ my $start_position_boolean = "false";
 my $window_first_position;
 my $window_last_position;
 
-if ($fixed_population =~ m/pool1/){
+elsif ($fixed_population =~ m/pool1/){
     while (my $line = <$INPUT>){
         $line =~ s/:/\t/g;
         my @array_of_line = split(/\t/, $line);
-        
         my $Scaffold = $array_of_line[0];
         my $Start_position = $array_of_line[1];
         my $End_position   = $array_of_line[1] + 1;
         my $Feature = "snp";
-        my $Adenine_count_fixed  = $array_of_line[3];
-        my $Thymine_count_fixed  = $array_of_line[4];
-        my $Cytosine_count_fixed = $array_of_line[5];
-        my $Guanine_count_fixed  = $array_of_line[6];
-        my $Deletion_count_fixed = $array_of_line[8];
-        my $Adenine_count_polymorphic  = $array_of_line[9];
-        my $Thymine_count_polymorphic  = $array_of_line[10];
-        my $Cytosine_count_polymorphic = $array_of_line[11];
-        my $Guanine_count_polymorphic  = $array_of_line[12];
-        my $Deletion_count_polymorphic = $array_of_line[14];
+        my $Adenine_count_fixed  = $array_of_line[9];
+        my $Thymine_count_fixed  = $array_of_line[10];
+        my $Cytosine_count_fixed = $array_of_line[11];
+        my $Guanine_count_fixed  = $array_of_line[12];
+        my $Deletion_count_fixed = $array_of_line[14];
+        my $Adenine_count_polymorphic  = $array_of_line[3];
+        my $Thymine_count_polymorphic  = $array_of_line[4];
+        my $Cytosine_count_polymorphic = $array_of_line[5];
+        my $Guanine_count_polymorphic  = $array_of_line[6];
+        my $Deletion_count_polymorphic = $array_of_line[8];
         
         my $read_nucleotides_fixed = $Adenine_count_fixed + $Thymine_count_fixed + $Cytosine_count_fixed + $Guanine_count_fixed + $Deletion_count_fixed;
         my $read_nucleotides_polymorphic = $Adenine_count_polymorphic + $Thymine_count_polymorphic + $Cytosine_count_polymorphic + $Guanine_count_polymorphic + $Deletion_count_polymorphic;
@@ -148,7 +147,7 @@ if ($fixed_population =~ m/pool1/){
         if ($Scaffold ne "$old_scaffold"){
             if ($window_counter!= 0 && $window_counter >= 0.1 * $window_size){
                 $snp_counter = $snp_counter / $window_counter * $window_size;
-                print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
+                print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n"
             }
             $window_counter = 0;
             $snp_counter = 0;
@@ -158,15 +157,16 @@ if ($fixed_population =~ m/pool1/){
         $old_scaffold = $Scaffold;
         $window_last_position = $array_of_line[1];
         
+        
         if ($read_nucleotides_fixed >= $read_depth){
-            
-            # Adenine
-            
-            my $Adenine_proportion_fixed = $Adenine_count_fixed / $read_nucleotides_fixed;
-            if ($Adenine_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+            if($read_nucleotides_polymorphic >= $read_depth){
+                # window counter
+                $window_counter = $window_counter + 1;
+                print "$window_counter\n";
+                # Adenine
+                
+                my $Adenine_proportion_fixed = $Adenine_count_fixed / $read_nucleotides_fixed;
+                if ($Adenine_proportion_fixed >= $fixed_threshold){
                     my $Non_adenine_proportion_polymorphic = 1 - $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_adenine_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_adenine_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -175,22 +175,13 @@ if ($fixed_population =~ m/pool1/){
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_adenine_proportion_polymorphic\n";
                         }
                     }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
-                    }
                 }
-            }
-            
-            #Thymine
-            
-            my $Thymine_proportion_fixed = $Thymine_count_fixed / $read_nucleotides_fixed;
-            if ($Thymine_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+                
+                
+                #Thymine
+                
+                my $Thymine_proportion_fixed = $Thymine_count_fixed / $read_nucleotides_fixed;
+                if ($Thymine_proportion_fixed >= $fixed_threshold){
                     my $Non_thymine_proportion_polymorphic = 1 - $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_thymine_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_thymine_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -199,22 +190,12 @@ if ($fixed_population =~ m/pool1/){
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_thymine_proportion_polymorphic\n";
                         }
                     }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
-                    }
                 }
-            }
-            
-            # Cytosine
-            
-            my $Cytosine_proportion_fixed = $Cytosine_count_fixed / $read_nucleotides_fixed;
-            if ($Cytosine_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+                
+                # Cytosine
+                
+                my $Cytosine_proportion_fixed = $Cytosine_count_fixed / $read_nucleotides_fixed;
+                if ($Cytosine_proportion_fixed >= $fixed_threshold){
                     my $Non_cytosine_proportion_polymorphic = 1 - $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -223,22 +204,12 @@ if ($fixed_population =~ m/pool1/){
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_cytosine_proportion_polymorphic\n";
                         }
                     }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
-                    }
                 }
-            }
-            
-            # Guanine
-            
-            my $Guanine_proportion_fixed = $Guanine_count_fixed / $read_nucleotides_fixed;
-            if ($Guanine_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+                
+                # Guanine
+                
+                my $Guanine_proportion_fixed = $Guanine_count_fixed / $read_nucleotides_fixed;
+                if ($Guanine_proportion_fixed >= $fixed_threshold){
                     my $Non_guanine_proportion_polymorphic = 1 - $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_guanine_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_guanine_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -247,22 +218,12 @@ if ($fixed_population =~ m/pool1/){
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_guanine_proportion_polymorphic\n";
                         }
                     }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
-                    }
                 }
-            }
-            
-            # Deletion
-            
-            my $Deletion_proportion_fixed = $Deletion_count_fixed / $read_nucleotides_fixed;
-            if ($Deletion_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+                
+                # Deletion
+                
+                my $Deletion_proportion_fixed = $Deletion_count_fixed / $read_nucleotides_fixed;
+                if ($Deletion_proportion_fixed >= $fixed_threshold){
                     my $Non_deletion_proportion_polymorphic = 1 - $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -270,12 +231,6 @@ if ($fixed_population =~ m/pool1/){
                             $snp_counter = $snp_counter + 1;
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_deletion_proportion_polymorphic\n";
                         }
-                    }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
                     }
                 }
             }
@@ -285,14 +240,14 @@ if ($fixed_population =~ m/pool1/){
         if ($i % $d == 0){
             print "[$i] nucleotide positions analyzed.\n";
         }
+        print "$window_counter\n";
+        if ($window_counter == $window_size){
+            print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
+            $window_counter = 0;
+            $snp_counter = 0;
+            $start_position_boolean = "false";
+        }
     }
-    if ($window_counter!= 0 && $window_counter >= 0.25 * $window_size){
-        $snp_counter = $snp_counter / $window_counter * $window_size;
-        print $SL_OUTPUT "$old_scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-    }
-    $window_counter = 0;
-    $snp_counter = 0;
-    $start_position_boolean = "false";
 }
 
 elsif ($fixed_population =~ m/pool2/){
@@ -334,16 +289,17 @@ elsif ($fixed_population =~ m/pool2/){
         
         $old_scaffold = $Scaffold;
         $window_last_position = $array_of_line[1];
+
         
         if ($read_nucleotides_fixed >= $read_depth){
+            if($read_nucleotides_polymorphic >= $read_depth){
+                # window counter
+                $window_counter = $window_counter + 1;
+                print "$window_counter\n";
+                # Adenine
             
-            # Adenine
-            
-            my $Adenine_proportion_fixed = $Adenine_count_fixed / $read_nucleotides_fixed;
-            if ($Adenine_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+                my $Adenine_proportion_fixed = $Adenine_count_fixed / $read_nucleotides_fixed;
+                if ($Adenine_proportion_fixed >= $fixed_threshold){
                     my $Non_adenine_proportion_polymorphic = 1 - $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_adenine_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_adenine_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -352,22 +308,13 @@ elsif ($fixed_population =~ m/pool2/){
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_adenine_proportion_polymorphic\n";
                         }
                     }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
-                    }
                 }
-            }
+                
             
-            #Thymine
+                #Thymine
             
-            my $Thymine_proportion_fixed = $Thymine_count_fixed / $read_nucleotides_fixed;
-            if ($Thymine_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+                my $Thymine_proportion_fixed = $Thymine_count_fixed / $read_nucleotides_fixed;
+                if ($Thymine_proportion_fixed >= $fixed_threshold){
                     my $Non_thymine_proportion_polymorphic = 1 - $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_thymine_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_thymine_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -376,22 +323,12 @@ elsif ($fixed_population =~ m/pool2/){
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_thymine_proportion_polymorphic\n";
                         }
                     }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
-                    }
                 }
-            }
             
-            # Cytosine
+                # Cytosine
             
-            my $Cytosine_proportion_fixed = $Cytosine_count_fixed / $read_nucleotides_fixed;
-            if ($Cytosine_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+                my $Cytosine_proportion_fixed = $Cytosine_count_fixed / $read_nucleotides_fixed;
+                if ($Cytosine_proportion_fixed >= $fixed_threshold){
                     my $Non_cytosine_proportion_polymorphic = 1 - $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -400,22 +337,12 @@ elsif ($fixed_population =~ m/pool2/){
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_cytosine_proportion_polymorphic\n";
                         }
                     }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
-                    }
                 }
-            }
             
-            # Guanine
+                # Guanine
             
-            my $Guanine_proportion_fixed = $Guanine_count_fixed / $read_nucleotides_fixed;
-            if ($Guanine_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+                my $Guanine_proportion_fixed = $Guanine_count_fixed / $read_nucleotides_fixed;
+                if ($Guanine_proportion_fixed >= $fixed_threshold){
                     my $Non_guanine_proportion_polymorphic = 1 - $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_guanine_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_guanine_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -424,22 +351,12 @@ elsif ($fixed_population =~ m/pool2/){
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_guanine_proportion_polymorphic\n";
                         }
                     }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
-                    }
                 }
-            }
             
-            # Deletion
-            
-            my $Deletion_proportion_fixed = $Deletion_count_fixed / $read_nucleotides_fixed;
-            if ($Deletion_proportion_fixed >= $fixed_threshold){
-                if($read_nucleotides_polymorphic >= $read_depth){
-                    # window counter
-                    $window_counter = $window_counter + 1;
+                # Deletion
+        
+                my $Deletion_proportion_fixed = $Deletion_count_fixed / $read_nucleotides_fixed;
+                if ($Deletion_proportion_fixed >= $fixed_threshold){
                     my $Non_deletion_proportion_polymorphic = 1 - $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
                     if ($Non_deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
                         if ($Non_deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
@@ -447,12 +364,6 @@ elsif ($fixed_population =~ m/pool2/){
                             $snp_counter = $snp_counter + 1;
                             print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_deletion_proportion_polymorphic\n";
                         }
-                    }
-                    if ($window_counter == $window_size){
-                        print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-                        $window_counter = 0;
-                        $snp_counter = 0;
-                        $start_position_boolean = "false";
                     }
                 }
             }
@@ -462,14 +373,14 @@ elsif ($fixed_population =~ m/pool2/){
         if ($i % $d == 0){
             print "[$i] nucleotide positions analyzed.\n";
         }
+        print "$window_counter\n";
+        if ($window_counter == $window_size){
+            print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
+            $window_counter = 0;
+            $snp_counter = 0;
+            $start_position_boolean = "false";
+        }
     }
-    if ($window_counter!= 0 && $window_counter >= 0.25 * $window_size){
-        $snp_counter = $snp_counter / $window_counter * $window_size;
-        print $SL_OUTPUT "$old_scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
-    }
-    $window_counter = 0;
-    $snp_counter = 0;
-    $start_position_boolean = "false";
 }
 
 else {
@@ -485,6 +396,6 @@ sub Usage
     my $command = $0;
     $command =~ s#^[^\s]/##;
     printf STDERR "@_\n" if ( @_ );
-    printf STDERR "\nThe format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --sliding_window_output_file=sliding_window_output_file [--help|-?]\n\nOne or more of your option fields is empty.\n\nFor more information, use the command perldoc Sex_SNP_finder_now.pl\n\n";
+    printf STDERR "\nThe format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.txt [--help|-?]\n\nOne or more of your option fields is empty.\n\nFor more information, use the command perldoc Sex_SNP_finder_now.pl\n\n";
     exit;
 }
