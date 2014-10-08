@@ -33,8 +33,8 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed
     - Column 1 -> Scaffold/Contig
     - Column 2 -> Position
     - Column 3 -> Reference genome base
-    - Column 4 -> Pool1 A:T:C:G:Del:N
-    - Column 5 -> Pool2 A:T:C:G:Del:N
+    - Column 4 -> Pool1 A:T:C:G:N:Del
+    - Column 5 -> Pool2 A:T:C:G:N:Del
 ```
     scaffold_0	1	N	0:2:0:0:0:0	0:4:0:0:0:0
     scaffold_0	2	N	7:0:0:0:0:0	5:0:0:0:0:0
@@ -88,3 +88,10 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed
 
 * window_size -> The size of your non-overlapping window. Sites with coverage that does not meet the read_depth threshold in both pools will not be considered. In the above example we used a window size of 2. 
 
+### Sex_SNP_finder_Fst_now.pl
+
+* The command line options are still same from Sex_SNP_finder_now.pl
+
+* New options
+
+    - fst_output_file -> This if the IGV readable Fst file
