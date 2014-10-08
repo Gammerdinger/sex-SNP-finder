@@ -24,7 +24,7 @@ Limitations
 ### Command line example
 
 ```
-perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.txt
+perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.txt --description=description
 ```
 
 ### Command line input options
@@ -109,3 +109,4 @@ scaffold_0	7	8	snp	0.212919254658385
 scaffold_0	9	10	snp	0.0223166843783207
 scaffold_0	10	11	snp	0.0554106783681708
 ```
+
