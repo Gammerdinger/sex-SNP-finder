@@ -21,11 +21,11 @@ Limitations
 ### Command line input options
 
 * input_file -> input_file.sync -> This is your sync file from the Popoolation2 pipeline. The format should look like this (You do not need to have the reference genome loaded into the 3rd column. Sex_SNP_Finder.pl does utilize reference genome information):
-    *Column 1 -> Scaffold/Contig
-    *Column 2 -> Position
-    *Column 3 -> Reference genome base
-    *Column 4 -> Pool1 A:T:C:G:Del:N
-    *Column 5 -> Pool2 A:T:C:G:Del:N
+    - Column 1 -> Scaffold/Contig
+    - Column 2 -> Position
+    - Column 3 -> Reference genome base
+    - Column 4 -> Pool1 A:T:C:G:Del:N
+    - Column 5 -> Pool2 A:T:C:G:Del:N
 ```
     scaffold_0	1	N	0:2:0:0:0:0	0:4:0:0:0:0
     scaffold_0	2	N	7:0:0:0:0:0	5:0:0:0:0:0
@@ -39,20 +39,43 @@ Limitations
     scaffold_0	10	N	38:2:0:0:0:0	27:7:0:0:0:0
 ```
 
-* --output_file -> output_file.igv -> This will be your IGV output file from Sex_SNP_finder.pl 
-    *Column 1 -> Scaffold
-    *Column 2 -> Start Position
-    *Column 3 -> End Position
-    *Column 4 -> Feature
-    *Column 5 -> Frequency of SNP in non-fixed pool
-        *We are looking for sites fixed in pool2 that are in an intermediate frequency (0.3-0.7) in pool1
-        *Look at position 7 on scaffold_0
-        *This position is fixed in pool2 for Thymine, but in pool1 1/3 of the positions have a Adenine and 2/3 have a Thymine
+* output_file -> output_file.igv -> This will be your IGV output file from Sex_SNP_finder.pl 
+    - Column 1 -> Scaffold
+    - Column 2 -> Start Position
+    - Column 3 -> End Position
+    - Column 4 -> Feature
+    - Column 5 -> Frequency of SNP in non-fixed pool
+        * We are looking for sites fixed in pool2 that are in an intermediate frequency (0.3-0.7) in pool1
+        * Look at position 7 on scaffold_0
+        * This position is fixed in pool2 for Thymine, but in pool1 1/3 of the positions have a Adenine and 2/3 have a Thymine
 
     
 ``` 
     scaffold_0	7	8	snp	0.333333333333333
 ```
 
-* 
-*
+* non_overlapping_window_output_file -> This is a tab-delimited text file where your non-overlapping window output will go. Following the parameters in the previous example along with paramters discussed below, the output should look like this:
+   - Column 1 -> Scaffold
+   - Column 2 -> Window start position
+   - Column 3 -> Window end position
+   - Column 4 -> Number of Sex_SNP_finder.pl SNPs found in this windpw
+      *Note: The first window is much larger than the next two windows. This is because the first two rows fail to meet the read depth criteria.
+```
+   scaffold_0	1	4	0
+   scaffold_0	5	6	0
+   scaffold_0	7	8	1
+   scaffold_0	9	10	0
+```
+
+* fixed_population -> pool1 or pool2 -> This is tell Sex_SNP_finder if you want it to consider pool 1 to be fixed or pool2 to be fixed.
+
+* fixed_threshold -> Due to seqeuncing errors, you might want to consider not only sites that are fixed (without a sequencing error), but also sites that that are almost fixed (may be the result of sequencing errors). We typically use a value of 0.9 here.
+
+* minimum_polymorphic_frequency -> This is the lower bound on the SNP frequency in the polymorphic pool. In the previous example for the output file we used 0.3.
+
+* maximum_polymoprhic_frequency -> This is the upper bound on the SNP frequency in the polymorphic pool. In the previous example for the output file we used 0.7.
+
+* read_depth -> This is the minimum read depth that both pools must have before Sex_SNP_finder.pl looks for SNPs. We typically use a value of 10 here.
+
+* window_size -> The size of your non-overlapping window. Sites with coverage that does not meet the read_depth threshold in both pools will not be considered. In the above example we used a window size of 2. 
+
