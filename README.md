@@ -21,6 +21,10 @@ Limitations
 * Popoolation2 provides a sliding window function for calculating Fst. Sex_SNP_finder.pl currently only calculates Fst for polymorphic bases and does not use windowing in its Fst calculation. 
 * Sex_SNP_finder.pl assumes a biallelic model. In other words, if your homogametic pool was fixed for adenine and your homogametic pool, with frequency thresholds of 0.3 to 0.7, had 0.5 adenine, 0.25 thymine and 0.25 guanine, this SNP would get called. Currently, we are addressing this situation, but in our data sets, this includes only a very small subset of sites called.
 
+### Command line example
+
+perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.txt
+
 ### Command line input options
 
 * input_file -> input_file.sync -> This is your sync file from the Popoolation2 pipeline. The format should look like this (You do not need to have the reference genome loaded into the 3rd column. Sex_SNP_Finder.pl does utilize reference genome information):
