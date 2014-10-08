@@ -118,4 +118,6 @@ scaffold_0	9	10	snp	0.0223166843783207
 scaffold_0	10	11	snp	0.0554106783681708
 ```
 
+Below is how Fst is calculated using Sex_SNP_finder_Fst_now.pl at each position:
+
 ![alt tag](https://github.com/Gammerdinger/sex-SNP-finder/blob/master/Popoolation2%20Fst%20equation.png)
