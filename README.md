@@ -133,3 +133,4 @@ Below is how Fst is calculated using Sex_SNP_finder_Fst_now.pl at each position:
 
 * Getting rid of the biallelic assumption. This should be resolved rather soon and is high on my priority list.
 * Toggle options so that you can choose which computations you would like done.
+* If you would like a feature added in, I am more than happy to collaborate and added features that you are interested in having.
