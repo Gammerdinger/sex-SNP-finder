@@ -117,7 +117,7 @@ my $start_position_boolean = "false";
 my $window_first_position;
 my $window_last_position;
 
-elsif ($fixed_population =~ m/pool1/){
+if ($fixed_population =~ m/pool1/){
     while (my $line = <$INPUT>){
         $line =~ s/:/\t/g;
         my @array_of_line = split(/\t/, $line);
@@ -295,7 +295,6 @@ elsif ($fixed_population =~ m/pool2/){
             if($read_nucleotides_polymorphic >= $read_depth){
                 # window counter
                 $window_counter = $window_counter + 1;
-                print "$window_counter\n";
                 # Adenine
             
                 my $Adenine_proportion_fixed = $Adenine_count_fixed / $read_nucleotides_fixed;
@@ -373,7 +372,6 @@ elsif ($fixed_population =~ m/pool2/){
         if ($i % $d == 0){
             print "[$i] nucleotide positions analyzed.\n";
         }
-        print "$window_counter\n";
         if ($window_counter == $window_size){
             print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
             $window_counter = 0;
