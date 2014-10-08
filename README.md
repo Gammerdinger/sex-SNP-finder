@@ -28,7 +28,7 @@ Limitations
 ### Command line example
 
 ```
-perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.txt --description=description
+perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_SNPs.igv --fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.txt --description=description
 ```
 
 ### Command line input options
@@ -97,7 +97,13 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed
 
 ### Sex_SNP_finder_Fst_now.pl
 
-* The command line options are still same from Sex_SNP_finder_now.pl
+* The command line options are still same from Sex_SNP_finder_now.pl except there is now an fst_outout_file option
+
+### Command line example
+
+```
+perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_SNPs.igv --fst_output_file=fst.igv--fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.txt --description=description
+```
 
 * New options
 
