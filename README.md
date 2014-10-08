@@ -60,6 +60,7 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed
 
     
 ``` 
+    Chromosome	Start	End	Feature	description_Sex_SNP_finder
     scaffold_0	7	8	snp	0.333333333333333
 ```
 
@@ -88,6 +89,8 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed
 
 * window_size -> The size of your non-overlapping window. Sites with coverage that does not meet the read_depth threshold in both pools will not be considered. In the above example we used a window size of 2. 
 
+* description -> This is the description to be used as the header in the IGV file
+
 ### Sex_SNP_finder_Fst_now.pl
 
 * The command line options are still same from Sex_SNP_finder_now.pl
@@ -95,3 +98,14 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed
 * New options
 
     - fst_output_file -> This if the IGV readable Fst file
+    
+```
+Chromosome	Start	End	Feature	description_Fst
+scaffold_0	3	4	snp	0.0595708639186899
+scaffold_0	4	5	snp	0.160353535353535
+scaffold_0	5	6	snp	0.173437908496732
+scaffold_0	6	7	snp	0.138106995884774
+scaffold_0	7	8	snp	0.212919254658385
+scaffold_0	9	10	snp	0.0223166843783207
+scaffold_0	10	11	snp	0.0554106783681708
+```
