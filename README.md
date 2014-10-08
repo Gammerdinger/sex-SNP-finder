@@ -2,7 +2,7 @@ Sex_SNP_finder
 ==============
 Background
 --------------
-Sex_SNP_finder.pl was designed to find nucleotides that were fixed at a site in one population and polymorphic at the same site in a different population. It is also designed to look for regions of differentiation using a sliding window approach. Initially, the program was used to compare between males and females, in order to find mutations potentially responsible for sex-determination. However, it is applicable to any population where one nucleotide is fixed in one pool and in a frequency of interest in another pool. Furthermore, functionality has been added to calculate Fst at each nucleotide that is polymorphic, not just those fitting the Sex_SNP_finder.pl criteria. This method was a derivation from Kofler et al. 2011's Popoolation2 calculation and treats deletions as a "5th nucleotide" when calculating Fst, a nuance not in Popoolation2. This calculation was not included in the BMC Genomics version of Sex_SNP_finder.pl
+Sex_SNP_finder.pl was designed to find nucleotides that were fixed at a site in one population and polymorphic at the same site in a different population. It is also designed to look for regions of differentiation using a non-overlapping window approach. Initially, the program was used to compare between males and females, in order to find mutations potentially responsible for sex-determination. However, it is applicable to any population where a nucleotide is fixed in one pool and in a frequency of interest in another pool. Furthermore, functionality has been added to calculate Fst at each nucleotide that is polymorphic, not just those fitting the Sex_SNP_finder.pl criteria. This method was a derivation from Kofler et al. 2011's Popoolation2 calculation and treats deletions as a "5th nucleotide" when calculating Fst, a nuance not in Popoolation2. This calculation was not included in the BMC Genomics version of Sex_SNP_finder_now.pl
 
 ### Citation
 
@@ -10,7 +10,7 @@ Coming soon
 
 ### Getting started with the Popoolation2 pipeline
 
-This software is built off of the synchronized (.sync) file created in popoolation2 (https://code.google.com/p/popoolation2/). Any issues going from the the should be able to be resolved there. An excellent tutorial on processing from .fastq files all the way through the .sync file creation and further subsequent analyses (https://code.google.com/p/popoolation2/wiki/Tutorial) is provided there.
+This software is built off of the synchronized (.sync) file created in Popoolation2 (https://code.google.com/p/popoolation2/). Any issues getting to the .sync file should be able to be resolved there. An excellent tutorial on processing from .fastq files all the way through to the .sync file creation and further subsequent analyses (https://code.google.com/p/popoolation2/wiki/Tutorial) is provided there.
 
 ### Sex_SNP_finder.pl Features and Limitations
 
