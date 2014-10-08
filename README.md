@@ -18,12 +18,12 @@ Features
 
 * Able to find positions that are fixed or nearly fixed in one pool and within an assigned frequency in a different pool.
 * Provides a non-overlapping window approach which can help identify regions that are the most dense of the SNPs that meet the parameters
-* Provides a modified calculation of Fst from the one provided in Popoolation2. Popoolation 2 does not include deletions in its calculation of Fst.
+* Provides a modified calculation of Fst from the one provided in Popoolation2. Popoolation 2 does not include deletions in its calculation of Fst like Sex_SNP_finder_Fst_now.pl does.
 
 Limitations
 
-* Popoolation2 provides a sliding window function for calculating Fst. Sex_SNP_finder.pl currently only calculates Fst for polymorphic bases and does not use windowing in its Fst calculation. 
-* Sex_SNP_finder.pl assumes a biallelic model. In other words, if your homogametic pool was fixed for adenine and your heterogametic pool, with frequency thresholds of 0.3 to 0.7, had 0.5 adenine, 0.25 thymine and 0.25 guanine, this SNP would get called. Currently, we are addressing this situation, but in our data sets, this includes only a very small subset of sites called.
+* Popoolation2 provides a sliding window function for calculating Fst. Sex_SNP_finder_Fst_now.pl currently only calculates Fst for polymorphic bases and does not use windowing in its Fst calculation. 
+* Sex_SNP_finder.pl assumes a biallelic model. In other words, if your fixed pool was fixed for adenine and your polymorphic pool, with frequency thresholds of 0.3 to 0.7, had 0.5 adenine, 0.25 thymine and 0.25 guanine, this SNP would get called. Currently, we are addressing this situation, but in our data sets, this includes only a very small subset of sites called.
 
 ### Command line example
 
@@ -33,7 +33,7 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_S
 
 ### Command line input options
 
-* input_file -> input_file.sync -> This is your sync file from the Popoolation2 pipeline. The format should look like this (You do not need to have the reference genome loaded into the 3rd column. Sex_SNP_Finder.pl does not utilize reference genome information):
+* input_file -> input_file.sync -> This is your sync file from the Popoolation2 pipeline. The format should look like this (You do not need to have the reference genome loaded into the 3rd column. Sex_SNP_Finder does not utilize reference genome information):
     - Column 1 -> Scaffold/Contig
     - Column 2 -> Position
     - Column 3 -> Reference genome base
@@ -53,7 +53,7 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_S
 ```
 
 * output_file -> output_file.igv -> This will be your IGV output file from Sex_SNP_finder.pl 
-    - Column 1 -> Scaffold
+    - Column 1 -> Scaffold/Contig
     - Column 2 -> Start Position
     - Column 3 -> End Position
     - Column 4 -> Feature
@@ -61,7 +61,7 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_S
         * We are looking for sites fixed in pool2 that are in an intermediate frequency (0.3-0.7) in pool1
         * Look at position 7 on scaffold_0
         * This position is fixed in pool2 for Thymine, but in pool1 1/3 of the positions have a Adenine and 2/3 have a Thymine
-        * Therefore, the resulting output looks like:
+        * Therefore, the resulting IGV output looks like:
 
     
 ``` 
@@ -74,7 +74,7 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_S
    - Column 2 -> Window start position
    - Column 3 -> Window end position
    - Column 4 -> Number of Sex_SNP_finder.pl SNPs found in this window
-      * Note: The first window is much larger than the next two windows. This is because the first two rows fail to meet the read depth criteria.
+      * Note: The first window is larger than the next three windows. This is because the first two rows of the .sync file fail to meet the read depth criteria.
 ```
    scaffold_0	1	4	0
    scaffold_0	5	6	0
@@ -82,9 +82,9 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_S
    scaffold_0	9	10	0
 ```
 
-* fixed_population -> pool1 or pool2 -> This tells Sex_SNP_finder if you want it to consider pool 1 or pool2 to be fixed.
+* fixed_population -> pool1 or pool2 -> This tells Sex_SNP_finder if you want it to consider pool 1 or pool2 to be the fixed pool.
 
-* fixed_threshold -> Due to seqeuncing errors, you might want to consider not only sites that are fixed (those without a sequencing error), but also sites that that are almost fixed (which may be the result of sequencing errors). We typically use a value of 0.9 here, but this is a function of coverage.
+* fixed_threshold -> Due to seqeuncing errors, you might want to consider not only sites that are fixed (those without a sequencing error) in your fixed population, but also sites that that are almost fixed (which may be the result of sequencing errors). We typically use a value of 0.9 here, but this is a function of coverage.
 
 * minimum_polymorphic_frequency -> This is the lower bound on the SNP frequency in the polymorphic pool. In the previous example for the output file we used 0.3.
 
@@ -108,7 +108,7 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_S
 
 * New options
 
-    - fst_output_file -> This is the IGV readable Fst file
+    - fst_output_file -> This is the IGV-readable Fst output file
         * Column 1 -> Scaffold
         * Column 2 -> Start Position
         * Column 3 -> End Position
