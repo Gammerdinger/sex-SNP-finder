@@ -125,16 +125,16 @@ if ($fixed_population =~ m/pool1/){
         my $Start_position = $array_of_line[1];
         my $End_position   = $array_of_line[1] + 1;
         my $Feature = "snp";
-        my $Adenine_count_fixed  = $array_of_line[9];
-        my $Thymine_count_fixed  = $array_of_line[10];
-        my $Cytosine_count_fixed = $array_of_line[11];
-        my $Guanine_count_fixed  = $array_of_line[12];
-        my $Deletion_count_fixed = $array_of_line[14];
-        my $Adenine_count_polymorphic  = $array_of_line[3];
-        my $Thymine_count_polymorphic  = $array_of_line[4];
-        my $Cytosine_count_polymorphic = $array_of_line[5];
-        my $Guanine_count_polymorphic  = $array_of_line[6];
-        my $Deletion_count_polymorphic = $array_of_line[8];
+        my $Adenine_count_fixed  = $array_of_line[3];
+        my $Thymine_count_fixed  = $array_of_line[4];
+        my $Cytosine_count_fixed = $array_of_line[5];
+        my $Guanine_count_fixed  = $array_of_line[6];
+        my $Deletion_count_fixed = $array_of_line[8];
+        my $Adenine_count_polymorphic  = $array_of_line[9];
+        my $Thymine_count_polymorphic  = $array_of_line[10];
+        my $Cytosine_count_polymorphic = $array_of_line[11];
+        my $Guanine_count_polymorphic  = $array_of_line[12];
+        my $Deletion_count_polymorphic = $array_of_line[14];
         
         my $read_nucleotides_fixed = $Adenine_count_fixed + $Thymine_count_fixed + $Cytosine_count_fixed + $Guanine_count_fixed + $Deletion_count_fixed;
         my $read_nucleotides_polymorphic = $Adenine_count_polymorphic + $Thymine_count_polymorphic + $Cytosine_count_polymorphic + $Guanine_count_polymorphic + $Deletion_count_polymorphic;
@@ -162,7 +162,7 @@ if ($fixed_population =~ m/pool1/){
             if($read_nucleotides_polymorphic >= $read_depth){
                 # window counter
                 $window_counter = $window_counter + 1;
-                print "$window_counter\n";
+
                 # Adenine
                 
                 my $Adenine_proportion_fixed = $Adenine_count_fixed / $read_nucleotides_fixed;
@@ -240,7 +240,7 @@ if ($fixed_population =~ m/pool1/){
         if ($i % $d == 0){
             print "[$i] nucleotide positions analyzed.\n";
         }
-        print "$window_counter\n";
+
         if ($window_counter == $window_size){
             print $SL_OUTPUT "$Scaffold\t$window_first_position\t$window_last_position\t$snp_counter\n";
             $window_counter = 0;
