@@ -97,8 +97,12 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=test.igv --fixed
 
 * New options
 
-    - fst_output_file -> This if the IGV readable Fst file
-    
+    - fst_output_file -> This is the IGV readable Fst file
+        * Column 1 -> Scaffold
+        * Column 2 -> Start Position
+        * Column 3 -> End Position
+        * Column 4 -> Feature
+        * Column 5 -> Fst
 ```
 Chromosome	Start	End	Feature	description_Fst
 scaffold_0	3	4	snp	0.0595708639186899
