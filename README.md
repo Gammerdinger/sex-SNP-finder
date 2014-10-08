@@ -97,7 +97,7 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_S
 
 ### Sex_SNP_finder_Fst_now.pl
 
-* The command line options are still same from Sex_SNP_finder_now.pl except there is now an fst_outout_file option
+* The command line options are still same from Sex_SNP_finder_now.pl except now there is an fst_output_file option
 
 ### Command line example
 
