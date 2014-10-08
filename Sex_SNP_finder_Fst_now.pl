@@ -17,11 +17,11 @@ use List::Util qw(min);
  
 =head1 DESCRIPTION
  
- Sex_SNP_finder_Fst_now.pl was a derivation from Sex_SNP_finder.pl. It is designed to look for regions of differentiation using a sliding window approach. Sex_finder.pl was designed to find nucleotides that were fixed at a site in one population and polymorphic at the same site in a different population. Initially, the program was used to compare between males and females, in order to find mutations responsible for sex-determination. However, it is applicable to any population where one nucleotide is fixed in one population and polymorphic in the other.
+ Sex_SNP_finder_Fst_now.pl was a derivation from Sex_SNP_finder.pl. It is designed to look for regions of differentiation using a non-overlapping window approach. Sex_finder.pl was designed to find nucleotides that were fixed at a site in one population and polymorphic at the same site in a different population. Initially, the program was used to compare between males and females, in order to find mutations responsible for sex-determination. However, it is applicable to any population where one nucleotide is fixed in one population and polymorphic in the other.
  
 =head1 EXAMPLE
  
- The format should be perl Sex_SNP_finder_Fst_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --sliding_window_output_file=sliding_window_output_file.txt --fst_output_file=fst_output_file.igv --description=description of file to be used in IGV header [--help|-?]\n\n
+ The format should be perl Sex_SNP_finder_Fst_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.txt --fst_output_file=fst_output_file.igv --description=description of file to be used in IGV header [--help|-?]\n\n
  
 =head1 VERSION
  
@@ -40,33 +40,33 @@ use List::Util qw(min);
 =cut
 
 
-my ($input_file, $output_file, $fixed_population, $fixed_threshold, $minimum_polymorphic_frequency, $maximum_polymorphic_frequency, $read_depth, $window_size, $sliding_window_output_file, $fst_output_file, $description, $help) = ("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty");
+my ($input_file, $output_file, $fixed_population, $fixed_threshold, $minimum_polymorphic_frequency, $maximum_polymorphic_frequency, $read_depth, $window_size, $non_overlapping_window_output_file, $fst_output_file, $description, $help) = ("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty");
 
 GetOptions(
-"input_file=s"                     => \$input_file,
-"output_file=s"                    => \$output_file,
-"fixed_population=s"               => \$fixed_population,
-"fixed_threshold=s"                => \$fixed_threshold,
-"minimum_polymorphic_frequency=s"  => \$minimum_polymorphic_frequency,
-"maximum_polymorphic_frequency=s"  => \$maximum_polymorphic_frequency,
-"read_depth=s"                     => \$read_depth,
-"window_size=s"                    => \$window_size,
-"sliding_window_output_file=s"     => \$sliding_window_output_file,
-"fst_output_file=s"                => \$fst_output_file,
-"description=s"                    => \$description,
-"help|?"                           => \$help
+"input_file=s"                              => \$input_file,
+"output_file=s"                             => \$output_file,
+"fixed_population=s"                        => \$fixed_population,
+"fixed_threshold=s"                         => \$fixed_threshold,
+"minimum_polymorphic_frequency=s"           => \$minimum_polymorphic_frequency,
+"maximum_polymorphic_frequency=s"           => \$maximum_polymorphic_frequency,
+"read_depth=s"                              => \$read_depth,
+"window_size=s"                             => \$window_size,
+"non_overlapping_window_output_file=s"      => \$non_overlapping_window_output_file,
+"fst_output_file=s"                         => \$fst_output_file,
+"description=s"                             => \$description,
+"help|?"                                    => \$help
 ) or Usage ( "Invalid command-line option.");
 
 Usage() if defined $help;
 
-if ($input_file eq "empty" || $output_file eq "empty" || $fixed_population eq "empty" || $fixed_threshold eq "empty" || $minimum_polymorphic_frequency eq "empty" || $maximum_polymorphic_frequency eq "empty" || $read_depth eq "empty" || $window_size eq "empty" || $sliding_window_output_file eq "empty" || $fst_output_file eq "empty" || $description eq "empty"){
-    die "\nERROR: The format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --sliding_window_output_file=sliding_window_output_file.txt --fst_output_file=fst_output_file.igv --description=description of file to be used in IGV header [--help|-?]\n\nOne or more of your option fields is empty.\n\nFor more information, use the command perldoc Sex_SNP_finder_Fst_now.pl\n\n"
+if ($input_file eq "empty" || $output_file eq "empty" || $fixed_population eq "empty" || $fixed_threshold eq "empty" || $minimum_polymorphic_frequency eq "empty" || $maximum_polymorphic_frequency eq "empty" || $read_depth eq "empty" || $window_size eq "empty" || $non_overlapping_window_output_file eq "empty" || $fst_output_file eq "empty" || $description eq "empty"){
+    die "\nERROR: The format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.txt --fst_output_file=fst_output_file.igv --description=description of file to be used in IGV header [--help|-?]\n\nOne or more of your option fields is empty.\n\nFor more information, use the command perldoc Sex_SNP_finder_Fst_now.pl\n\n"
 }
 
 open (my $INPUT, "<$input_file");
 
 open (my $OUTPUT, ">$output_file");
-open (my $SL_OUTPUT, ">$sliding_window_output_file");
+open (my $SL_OUTPUT, ">$non_overlapping_window_output_file");
 open (my $FST_OUTPUT, ">$fst_output_file");
 
 
@@ -499,6 +499,6 @@ sub Usage
     my $command = $0;
     $command =~ s#^[^\s]/##;
     printf STDERR "@_\n" if ( @_ );
-    printf STDERR "\nThe format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --sliding_window_output_file=sliding_window_output_file.txt --fst_output_file=fst_output_file.igv --description=description of file to be used in IGV header [--help|-?]\n\nOne or more of your option fields is empty.\n\nFor more information, use the command perldoc Sex_SNP_finder_Fst_now.pl\n\n";
+    printf STDERR "\nThe format should be perl Sex_SNP_finder_now.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --read_depth=[value greater than 0] --window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.txt --fst_output_file=fst_output_file.igv --description=description of file to be used in IGV header [--help|-?]\n\nOne or more of your option fields is empty.\n\nFor more information, use the command perldoc Sex_SNP_finder_Fst_now.pl\n\n";
     exit;
 }
