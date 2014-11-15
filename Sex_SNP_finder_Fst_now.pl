@@ -183,14 +183,25 @@ if ($fixed_population =~ m/pool1/){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
+                
                 if ($Adenine_proportion_fixed >= $fixed_threshold){
-                    if ($Non_adenine_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_adenine_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_adenine_proportion_polymorphic\n";
+                    my $Thymine_proportion_polymorphic = $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Cytosine_proportion_polymorphic = $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Guanine_proportion_polymorphic = $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Deletion_proportion_polymorphic = $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Thymine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Guanine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Thymine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Guanine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_adenine_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
                 
                 
@@ -203,13 +214,23 @@ if ($fixed_population =~ m/pool1/){
                     $Fst_boolean = $Fst_boolean + 1;
                 }
                 if ($Thymine_proportion_fixed >= $fixed_threshold){
-                    if ($Non_thymine_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_thymine_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_thymine_proportion_polymorphic\n";
+                    my $Adenine_proportion_polymorphic = $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Cytosine_proportion_polymorphic = $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Guanine_proportion_polymorphic = $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Deletion_proportion_polymorphic = $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Adenine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Guanine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Adenine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Guanine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_thymine_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
                 
                 # Cytosine
@@ -221,13 +242,23 @@ if ($fixed_population =~ m/pool1/){
                     $Fst_boolean = $Fst_boolean + 1;
                 }
                 if ($Cytosine_proportion_fixed >= $fixed_threshold){
-                    if ($Non_cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_cytosine_proportion_polymorphic\n";
+                    my $Adenine_proportion_polymorphic = $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Thymine_proportion_polymorphic = $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Guanine_proportion_polymorphic = $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Deletion_proportion_polymorphic = $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Adenine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Thymine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Guanine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Adenine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Thymine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Guanine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_cytosine_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
                 
                 # Guanine
@@ -239,13 +270,23 @@ if ($fixed_population =~ m/pool1/){
                     $Fst_boolean = $Fst_boolean + 1;
                 }
                 if ($Guanine_proportion_fixed >= $fixed_threshold){
-                    if ($Non_guanine_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_guanine_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_guanine_proportion_polymorphic\n";
+                    my $Adenine_proportion_polymorphic = $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Thymine_proportion_polymorphic = $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Cytosine_proportion_polymorphic = $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Deletion_proportion_polymorphic = $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Adenine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Thymine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Adenine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Thymine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_guanine_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
                 
                 # Deletion
@@ -257,13 +298,23 @@ if ($fixed_population =~ m/pool1/){
                     $Fst_boolean = $Fst_boolean + 1;
                 }
                 if ($Deletion_proportion_fixed >= $fixed_threshold){
-                    if ($Non_deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_deletion_proportion_polymorphic\n";
+                    my $Adenine_proportion_polymorphic = $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Thymine_proportion_polymorphic = $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Cytosine_proportion_polymorphic = $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Guanine_proportion_polymorphic = $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Adenine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Thymine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Guanine_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Adenine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Thymine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Guanine_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_deletion_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
             }
         }
@@ -304,7 +355,7 @@ elsif ($fixed_population =~ m/pool2/){
         my $Deletion_count_polymorphic = $array_of_line[8];
         my $Fst_boolean = 0;
         my $Fst_value;
-
+        
         my $read_nucleotides_fixed = $Adenine_count_fixed + $Thymine_count_fixed + $Cytosine_count_fixed + $Guanine_count_fixed + $Deletion_count_fixed;
         my $read_nucleotides_polymorphic = $Adenine_count_polymorphic + $Thymine_count_polymorphic + $Cytosine_count_polymorphic + $Guanine_count_polymorphic + $Deletion_count_polymorphic;
         
@@ -326,11 +377,12 @@ elsif ($fixed_population =~ m/pool2/){
         $old_scaffold = $Scaffold;
         $window_last_position = $array_of_line[1];
         
+        
         if ($read_nucleotides_fixed >= $read_depth){
             if($read_nucleotides_polymorphic >= $read_depth){
                 # window counter
                 $window_counter = $window_counter + 1;
-
+                
                 # Adenine
                 
                 my $Adenine_proportion_fixed = $Adenine_count_fixed / $read_nucleotides_fixed;
@@ -339,14 +391,25 @@ elsif ($fixed_population =~ m/pool2/){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
+                
                 if ($Adenine_proportion_fixed >= $fixed_threshold){
-                    if ($Non_adenine_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_adenine_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_adenine_proportion_polymorphic\n";
+                    my $Thymine_proportion_polymorphic = $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Cytosine_proportion_polymorphic = $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Guanine_proportion_polymorphic = $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Deletion_proportion_polymorphic = $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Thymine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Guanine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Thymine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Guanine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_adenine_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
                 
                 
@@ -359,31 +422,51 @@ elsif ($fixed_population =~ m/pool2/){
                     $Fst_boolean = $Fst_boolean + 1;
                 }
                 if ($Thymine_proportion_fixed >= $fixed_threshold){
-                    if ($Non_thymine_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_thymine_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_thymine_proportion_polymorphic\n";
+                    my $Adenine_proportion_polymorphic = $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Cytosine_proportion_polymorphic = $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Guanine_proportion_polymorphic = $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Deletion_proportion_polymorphic = $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Adenine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Guanine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Adenine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Guanine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_thymine_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
                 
                 # Cytosine
                 
                 my $Cytosine_proportion_fixed = $Cytosine_count_fixed / $read_nucleotides_fixed;
                 my $Non_cytosine_proportion_polymorphic = 1 - $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_cytosine_proportion_polymorphic > 0 && $Non_cytosine_proportion_polymorphic < 1 || $Cytosine_proportion_fixed > 0 && $Cytosine_proportion_fixed < 1){
+                if ($Non_cytosine_proportion_polymorphic > 0 && $Non_cytosine_proportion_polymorphic < 1|| $Cytosine_proportion_fixed > 0 && $Cytosine_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
                 if ($Cytosine_proportion_fixed >= $fixed_threshold){
-                    if ($Non_cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_cytosine_proportion_polymorphic\n";
+                    my $Adenine_proportion_polymorphic = $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Thymine_proportion_polymorphic = $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Guanine_proportion_polymorphic = $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Deletion_proportion_polymorphic = $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Adenine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Thymine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Guanine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Adenine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Thymine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Guanine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_cytosine_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
                 
                 # Guanine
@@ -395,13 +478,23 @@ elsif ($fixed_population =~ m/pool2/){
                     $Fst_boolean = $Fst_boolean + 1;
                 }
                 if ($Guanine_proportion_fixed >= $fixed_threshold){
-                    if ($Non_guanine_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_guanine_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_guanine_proportion_polymorphic\n";
+                    my $Adenine_proportion_polymorphic = $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Thymine_proportion_polymorphic = $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Cytosine_proportion_polymorphic = $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Deletion_proportion_polymorphic = $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Adenine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Thymine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Adenine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Thymine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_guanine_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
                 
                 # Deletion
@@ -413,13 +506,23 @@ elsif ($fixed_population =~ m/pool2/){
                     $Fst_boolean = $Fst_boolean + 1;
                 }
                 if ($Deletion_proportion_fixed >= $fixed_threshold){
-                    if ($Non_deletion_proportion_polymorphic <= $maximum_polymorphic_frequency){
-                        if ($Non_deletion_proportion_polymorphic >= $minimum_polymorphic_frequency){
-                            # snp counter
-                            $snp_counter = $snp_counter + 1;
-                            print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_deletion_proportion_polymorphic\n";
+                    my $Adenine_proportion_polymorphic = $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Thymine_proportion_polymorphic = $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Cytosine_proportion_polymorphic = $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
+                    my $Guanine_proportion_polymorphic = $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
+                    if ($Adenine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Thymine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Cytosine_proportion_polymorphic <= $maximum_polymorphic_frequency ||
+                        $Guanine_proportion_polymorphic <= $maximum_polymorphic_frequency){
+                            if ($Adenine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Thymine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Cytosine_proportion_polymorphic >= $minimum_polymorphic_frequency ||
+                                $Guanine_proportion_polymorphic >= $minimum_polymorphic_frequency){
+                                    # snp counter
+                                    $snp_counter = $snp_counter + 1;
+                                    print $OUTPUT "$Scaffold\t$Start_position\t$End_position\t$Feature\t$Non_deletion_proportion_polymorphic\n";
+                                }
                         }
-                    }
                 }
             }
         }
