@@ -23,7 +23,6 @@ Features
 Limitations
 
 * Popoolation2 provides a sliding window function for calculating Fst. Sex_SNP_finder_Fst_now.pl currently only calculates Fst for polymorphic bases and does not use windowing in its Fst calculation. 
-* Sex_SNP_finder.pl assumes a biallelic model. In other words, if your fixed pool was fixed for adenine and your polymorphic pool, with frequency thresholds of 0.3 to 0.7, had 0.5 adenine, 0.25 thymine and 0.25 guanine, this SNP would get called. Currently, we are addressing this situation, but in our data sets, this includes only a very small subset of sites called.
 
 ### Command line example
 
