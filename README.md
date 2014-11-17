@@ -28,7 +28,7 @@ Limitations
 ### Command line example
 
 ```
-perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_SNPs.igv --fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.txt --description=description
+perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_SNPs.igv --fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.igv --description=description
 ```
 
 ### Command line input options
@@ -69,17 +69,19 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_S
     scaffold_0	7	8	snp	0.333333333333333
 ```
 
-* non_overlapping_window_output_file -> This is a tab-delimited text file where your non-overlapping window output will go. Following the parameters in the previous example along with paramters discussed below, the output should look like this:
+* non_overlapping_window_output_file -> This is an IGV-readable file where your non-overlapping window output will go. Following the parameters in the previous example along with paramters discussed below, the output should look like this:
    - Column 1 -> Scaffold
    - Column 2 -> Window start position
    - Column 3 -> Window end position
+   - Column 3 -> Feature
    - Column 4 -> Number of Sex_SNP_finder.pl SNPs found in this window
       * Note: The first window is larger than the next three windows. This is because the first two rows of the .sync file fail to meet the read depth criteria.
 ```
-   scaffold_0	1	4	0
-   scaffold_0	5	6	0
-   scaffold_0	7	8	1
-   scaffold_0	9	10	0
+   Chromosome   Start   End Feature description_Sex_SNP_finder
+   scaffold_0	1	4	snp_count   0
+   scaffold_0	5	6	snp_count   0
+   scaffold_0	7	8	snp_count   1
+   scaffold_0	9	10	snp_count   0
 ```
 
 * fixed_population -> pool1 or pool2 -> This tells Sex_SNP_finder if you want it to consider pool 1 or pool2 to be the fixed pool.
@@ -103,7 +105,7 @@ perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_S
 ### Command line example
 
 ```
-perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_SNPs.igv --fst_output_file=fst.igv--fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.txt --description=description
+perl Sex_SNP_finder_now.pl --input_file=test.sync --output_file=sex_SNP_finder_SNPs.igv --fst_output_file=fst.igv--fixed_population=pool2 --fixed_threshold=0.9 --minimum_polymorphic_frequency=0.3 --maximum_polymorphic_frequency=0.7 --read_depth=10 --window_size=2 --non_overlapping_window_output_file=non_overlapping_window_output_file.igv --description=description
 ```
 
 * New options
@@ -131,6 +133,5 @@ Below is how Fst is calculated using Sex_SNP_finder_Fst_now.pl at each position:
 
 ### Features in the works
 
-* Getting rid of the biallelic assumption. This should be resolved rather soon and is high on my priority list.
 * Toggle options so that you can choose which computations you would like done.
 * If you would like a feature added in, I am more than happy to collaborate and added features that you are interested in having.
