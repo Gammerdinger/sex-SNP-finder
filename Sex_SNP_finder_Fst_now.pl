@@ -184,7 +184,7 @@ if ($fixed_population =~ m/pool1/){
                 
                 my $Adenine_proportion_fixed = $Adenine_count_fixed / $read_nucleotides_fixed;
                 my $Non_adenine_proportion_polymorphic = 1 - $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_adenine_proportion_polymorphic > 0 && $Non_adenine_proportion_polymorphic < 1 || $Adenine_proportion_fixed > 0 && $Adenine_proportion_fixed < 1){
+                if ($Non_adenine_proportion_polymorphic > 0 || $Adenine_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
@@ -224,7 +224,7 @@ if ($fixed_population =~ m/pool1/){
                 
                 my $Thymine_proportion_fixed = $Thymine_count_fixed / $read_nucleotides_fixed;
                 my $Non_thymine_proportion_polymorphic = 1 - $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_thymine_proportion_polymorphic > 0 && $Non_thymine_proportion_polymorphic < 1 || $Thymine_proportion_fixed > 0 && $Thymine_proportion_fixed < 1){
+                if ($Non_thymine_proportion_polymorphic > 0 || $Thymine_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
@@ -263,7 +263,7 @@ if ($fixed_population =~ m/pool1/){
                 
                 my $Cytosine_proportion_fixed = $Cytosine_count_fixed / $read_nucleotides_fixed;
                 my $Non_cytosine_proportion_polymorphic = 1 - $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_cytosine_proportion_polymorphic > 0 && $Non_cytosine_proportion_polymorphic < 1|| $Cytosine_proportion_fixed > 0 && $Cytosine_proportion_fixed < 1){
+                if ($Non_cytosine_proportion_polymorphic > 0|| $Cytosine_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
@@ -302,7 +302,7 @@ if ($fixed_population =~ m/pool1/){
                 
                 my $Guanine_proportion_fixed = $Guanine_count_fixed / $read_nucleotides_fixed;
                 my $Non_guanine_proportion_polymorphic = 1 - $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_guanine_proportion_polymorphic > 0 && $Non_guanine_proportion_polymorphic < 1 || $Guanine_proportion_fixed > 0 && $Guanine_proportion_fixed < 1){
+                if ($Non_guanine_proportion_polymorphic > 0|| $Guanine_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
@@ -341,7 +341,7 @@ if ($fixed_population =~ m/pool1/){
                 
                 my $Deletion_proportion_fixed = $Deletion_count_fixed / $read_nucleotides_fixed;
                 my $Non_deletion_proportion_polymorphic = 1 - $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_deletion_proportion_polymorphic > 0 && $Non_deletion_proportion_polymorphic < 1|| $Deletion_proportion_fixed > 0 && $Deletion_proportion_fixed < 1){
+                if ($Non_deletion_proportion_polymorphic > 0 || $Deletion_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
@@ -447,7 +447,7 @@ elsif ($fixed_population =~ m/pool2/){
                 
                 my $Adenine_proportion_fixed = $Adenine_count_fixed / $read_nucleotides_fixed;
                 my $Non_adenine_proportion_polymorphic = 1 - $Adenine_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_adenine_proportion_polymorphic > 0 && $Non_adenine_proportion_polymorphic < 1 || $Adenine_proportion_fixed > 0 && $Adenine_proportion_fixed < 1){
+                if ($Non_adenine_proportion_polymorphic > 0 || $Adenine_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
@@ -487,7 +487,7 @@ elsif ($fixed_population =~ m/pool2/){
                 
                 my $Thymine_proportion_fixed = $Thymine_count_fixed / $read_nucleotides_fixed;
                 my $Non_thymine_proportion_polymorphic = 1 - $Thymine_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_thymine_proportion_polymorphic > 0 && $Non_thymine_proportion_polymorphic < 1 || $Thymine_proportion_fixed > 0 && $Thymine_proportion_fixed < 1){
+                if ($Non_thymine_proportion_polymorphic > 0 || $Thymine_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
@@ -526,7 +526,7 @@ elsif ($fixed_population =~ m/pool2/){
                 
                 my $Cytosine_proportion_fixed = $Cytosine_count_fixed / $read_nucleotides_fixed;
                 my $Non_cytosine_proportion_polymorphic = 1 - $Cytosine_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_cytosine_proportion_polymorphic > 0 && $Non_cytosine_proportion_polymorphic < 1|| $Cytosine_proportion_fixed > 0 && $Cytosine_proportion_fixed < 1){
+                if ($Non_cytosine_proportion_polymorphic > 0|| $Cytosine_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
@@ -565,7 +565,7 @@ elsif ($fixed_population =~ m/pool2/){
                 
                 my $Guanine_proportion_fixed = $Guanine_count_fixed / $read_nucleotides_fixed;
                 my $Non_guanine_proportion_polymorphic = 1 - $Guanine_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_guanine_proportion_polymorphic > 0 && $Non_guanine_proportion_polymorphic < 1 || $Guanine_proportion_fixed > 0 && $Guanine_proportion_fixed < 1){
+                if ($Non_guanine_proportion_polymorphic > 0|| $Guanine_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
@@ -604,7 +604,7 @@ elsif ($fixed_population =~ m/pool2/){
                 
                 my $Deletion_proportion_fixed = $Deletion_count_fixed / $read_nucleotides_fixed;
                 my $Non_deletion_proportion_polymorphic = 1 - $Deletion_count_polymorphic / $read_nucleotides_polymorphic;
-                if ($Non_deletion_proportion_polymorphic > 0 && $Non_deletion_proportion_polymorphic < 1|| $Deletion_proportion_fixed > 0 && $Deletion_proportion_fixed < 1){
+                if ($Non_deletion_proportion_polymorphic > 0 || $Deletion_proportion_fixed < 1){
                     $Fst_value = Fst($Adenine_count_fixed, $Thymine_count_fixed, $Cytosine_count_fixed,$Guanine_count_fixed, $Deletion_count_fixed, $read_nucleotides_fixed, $Adenine_count_polymorphic, $Thymine_count_polymorphic, $Cytosine_count_polymorphic, $Guanine_count_polymorphic, $Deletion_count_polymorphic, $read_nucleotides_polymorphic);
                     $Fst_boolean = $Fst_boolean + 1;
                 }
