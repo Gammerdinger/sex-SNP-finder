@@ -6,7 +6,11 @@ Sex_SNP_finder.pl was designed to find nucleotides that were fixed at a site in 
 
 ### Citation
 
-Coming soon
+Please cite Sex_SNP_finder as:
+
+Gammerdinger et al.: Structure and decay of a proto-Y region in Tilapia, Oreochromis niloticus. BMC Genomics 2014 15:975.
+
+￼￼￼doi:10.1186/1471-2164-15-975
 
 ### Getting started with the Popoolation2 pipeline
 
