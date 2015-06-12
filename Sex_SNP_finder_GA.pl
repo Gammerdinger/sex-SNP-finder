@@ -22,7 +22,7 @@ Sex_SNP_finder_GA.pl
  
 =head1 EXAMPLE
  
- perl Sex_SNP_finder_GA.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --minimum_read_depth=[value greater than 0] --maximum_read_depth=[value greater than the minimum_read_depth] --minimum_allele_count=[minimum number of allele counts at a site before an allele is considered real and not a sequencing error] --sex_SNP_finder_window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.igv --fst_output_file=fst_output_file.igv --dxy_output_file=dxy_output_file.igv --da_output_file=da_output_file.igv --cp_output_file=cp_output_file.igv --neis_D_output_file=neis_D_output_file.igv--description=description of file to be used in IGV header [--help|-?]
+ perl Sex_SNP_finder_GA.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --minimum_read_depth=[value greater than 0] --maximum_read_depth=[value greater than the minimum_read_depth] --minimum_read_count=[minimum number of read counts at a site before an allele is considered real and not a sequencing error] --sex_SNP_finder_window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.igv --fst_output_file=fst_output_file.igv --dxy_output_file=dxy_output_file.igv --da_output_file=da_output_file.igv --cp_output_file=cp_output_file.igv --neis_D_output_file=neis_D_output_file.igv--description=description of file to be used in IGV header [--help|-?]
 
  
 =head1 LICENSE
@@ -54,7 +54,7 @@ Sex_SNP_finder_GA.pl
 =cut
 
 
-my ($input_file, $output_file, $fixed_population, $fixed_threshold, $minimum_polymorphic_frequency, $maximum_polymorphic_frequency, $minimum_read_depth, $maximum_read_depth, $minimum_allele_count,  $sex_SNP_finder_window_size, $non_overlapping_window_output_file, $fst_output_file, $dxy_output_file, $da_output_file, $cp_output_file, $neis_D_output_file, $description, $help) = ("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty","empty", "empty", "empty", "empty", "empty");
+my ($input_file, $output_file, $fixed_population, $fixed_threshold, $minimum_polymorphic_frequency, $maximum_polymorphic_frequency, $minimum_read_depth, $maximum_read_depth, $minimum_read_count,  $sex_SNP_finder_window_size, $non_overlapping_window_output_file, $fst_output_file, $dxy_output_file, $da_output_file, $cp_output_file, $neis_D_output_file, $description, $help) = ("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty","empty", "empty", "empty", "empty", "empty");
 
 GetOptions(
 "input_file=s"                              => \$input_file,
@@ -65,7 +65,7 @@ GetOptions(
 "maximum_polymorphic_frequency=s"           => \$maximum_polymorphic_frequency,
 "minimum_read_depth=s"                      => \$minimum_read_depth,
 "maximum_read_depth=s"                      => \$maximum_read_depth,
-"minimum_allele_count=s"                    => \$minimum_allele_count,
+"minimum_read_count=s"                    => \$minimum_read_count,
 "sex_SNP_finder_window_size=s"              => \$sex_SNP_finder_window_size,
 "non_overlapping_window_output_file=s"      => \$non_overlapping_window_output_file,
 "fst_output_file=s"                         => \$fst_output_file,
@@ -79,8 +79,8 @@ GetOptions(
 
 Usage() if defined $help;
 
-if ($input_file eq "empty" || $output_file eq "empty" || $fixed_population eq "empty" || $fixed_threshold eq "empty" || $minimum_polymorphic_frequency eq "empty" || $maximum_polymorphic_frequency eq "empty" || $minimum_read_depth eq "empty" || $maximum_read_depth eq "empty" || $minimum_allele_count eq "empty" ||   $sex_SNP_finder_window_size eq "empty" || $non_overlapping_window_output_file eq "empty" || $fst_output_file eq "empty" ||  $dxy_output_file eq "empty" || $da_output_file eq "empty" || $cp_output_file eq "empty" || $neis_D_output_file eq "empty" || $description eq "empty"){
-    die "\nERROR: The format should be perl Sex_SNP_finder_GA.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --minimum_read_depth=[value greater than 0] --maximum_read_depth=[value greater than the minimum_read_depth] --minimum_allele_count=[minimum number of allele counts at a site before an allele is considered real and not a sequencing error] --sex_SNP_finder_window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.igv --fst_output_file=fst_output_file.igv --dxy_output_file=dxy_output_file.igv --da_output_file=da_output_file.igv --cp_output_file=cp_output_file.igv --neis_D_output_file=neis_D_output_file.igv--description=description of file to be used in IGV header [--help|-?]\n\nOne or more of your option fields is empty.\n\nThe parameters are currently:\n\ninput_file: $input_file\noutput_file: $output_file\nfixed_population: $fixed_population\nfixed_threshold: $fixed_threshold\nminimum_polymorphic: $minimum_polymorphic_frequency\nmaximum_polymorphic_frequency: $maximum_polymorphic_frequency\nminimum_read_depth: $minimum_read_depth\nmaximum_read_depth: $maximum_read_depth\nminimum_allele_count: $minimum_allele_count\nsex_SNP_finder_window_size: $sex_SNP_finder_window_size\nnon_overlapping_window_output_file: $non_overlapping_window_output_file\nfst_output_file: $fst_output_file\ndxy_output_file: $dxy_output_file\nda_output_file: $da_output_file\ncp_output_file: $cp_output_file\nneis_D_output_file: $neis_D_output_file\ndescription: $description\n\nFor more information, use the command perldoc Sex_SNP_finder_Fst_now.pl\n\n"
+if ($input_file eq "empty" || $output_file eq "empty" || $fixed_population eq "empty" || $fixed_threshold eq "empty" || $minimum_polymorphic_frequency eq "empty" || $maximum_polymorphic_frequency eq "empty" || $minimum_read_depth eq "empty" || $maximum_read_depth eq "empty" || $minimum_read_count eq "empty" ||   $sex_SNP_finder_window_size eq "empty" || $non_overlapping_window_output_file eq "empty" || $fst_output_file eq "empty" ||  $dxy_output_file eq "empty" || $da_output_file eq "empty" || $cp_output_file eq "empty" || $neis_D_output_file eq "empty" || $description eq "empty"){
+    die "\nERROR: The format should be perl Sex_SNP_finder_GA.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --minimum_read_depth=[value greater than 0] --maximum_read_depth=[value greater than the minimum_read_depth] --minimum_read_count=[minimum number of read counts at a site before an allele is considered real and not a sequencing error] --sex_SNP_finder_window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.igv --fst_output_file=fst_output_file.igv --dxy_output_file=dxy_output_file.igv --da_output_file=da_output_file.igv --cp_output_file=cp_output_file.igv --neis_D_output_file=neis_D_output_file.igv--description=description of file to be used in IGV header [--help|-?]\n\nOne or more of your option fields is empty.\n\nThe parameters are currently:\n\ninput_file: $input_file\noutput_file: $output_file\nfixed_population: $fixed_population\nfixed_threshold: $fixed_threshold\nminimum_polymorphic: $minimum_polymorphic_frequency\nmaximum_polymorphic_frequency: $maximum_polymorphic_frequency\nminimum_read_depth: $minimum_read_depth\nmaximum_read_depth: $maximum_read_depth\nminimum_read_count: $minimum_read_count\nsex_SNP_finder_window_size: $sex_SNP_finder_window_size\nnon_overlapping_window_output_file: $non_overlapping_window_output_file\nfst_output_file: $fst_output_file\ndxy_output_file: $dxy_output_file\nda_output_file: $da_output_file\ncp_output_file: $cp_output_file\nneis_D_output_file: $neis_D_output_file\ndescription: $description\n\nFor more information, use the command perldoc Sex_SNP_finder_Fst_now.pl\n\n"
 }
 
 open (my $INPUT, "<$input_file");
@@ -97,7 +97,7 @@ open (my $NEIS_D_OUTPUT, ">$neis_D_output_file");
 print "Your fixed population is ", $fixed_population, ".\n";
 print "Your minimum read depth is ", $minimum_read_depth, " nucleotides.\n";
 print "Your maximum read depth is ", $maximum_read_depth, " nucleotides.\n";
-print "Your minimum allele count is ", $minimum_allele_count, " counts.\n";
+print "Your minimum allele count is ", $minimum_read_count, " counts.\n";
 print "Your minimum fixed threshold is ", $fixed_threshold, ".\n";
 print "Your minumum polymorphic frequency is ", $minimum_polymorphic_frequency, ".\n";
 print "Your maximum polymorphic frequency is ", $maximum_polymorphic_frequency, ".\n";
@@ -211,34 +211,34 @@ if ($fixed_population =~ m/pool1/){
         my $Cp_value = 0;
         my $Neis_D_value = 0;
         
-        if ($Adenine_count_fixed <= $minimum_allele_count){
+        if ($Adenine_count_fixed < $minimum_read_count){
             $Adenine_count_fixed = 0
         }
-        if ($Thymine_count_fixed <= $minimum_allele_count){
+        if ($Thymine_count_fixed < $minimum_read_count){
             $Thymine_count_fixed = 0
         }
-        if ($Cytosine_count_fixed <= $minimum_allele_count){
+        if ($Cytosine_count_fixed < $minimum_read_count){
             $Cytosine_count_fixed = 0
         }
-        if ($Guanine_count_fixed <= $minimum_allele_count){
+        if ($Guanine_count_fixed < $minimum_read_count){
             $Guanine_count_fixed = 0
         }
-        if ($Deletion_count_fixed <= $minimum_allele_count){
+        if ($Deletion_count_fixed < $minimum_read_count){
             $Deletion_count_fixed = 0
         }
-        if ($Adenine_count_polymorphic <= $minimum_allele_count){
+        if ($Adenine_count_polymorphic < $minimum_read_count){
             $Adenine_count_polymorphic = 0
         }
-        if ($Thymine_count_polymorphic <= $minimum_allele_count){
+        if ($Thymine_count_polymorphic < $minimum_read_count){
             $Thymine_count_polymorphic = 0
         }
-        if ($Cytosine_count_polymorphic <= $minimum_allele_count){
+        if ($Cytosine_count_polymorphic < $minimum_read_count){
             $Cytosine_count_polymorphic = 0
         }
-        if ($Guanine_count_polymorphic <= $minimum_allele_count){
+        if ($Guanine_count_polymorphic < $minimum_read_count){
             $Guanine_count_polymorphic = 0
         }
-        if ($Deletion_count_polymorphic <= $minimum_allele_count){
+        if ($Deletion_count_polymorphic < $minimum_read_count){
             $Deletion_count_polymorphic = 0
         }
         
@@ -548,34 +548,34 @@ elsif ($fixed_population =~ m/pool2/){
         my $Neis_D_value = 0;
         
         
-        if ($Adenine_count_fixed <= $minimum_allele_count){
+        if ($Adenine_count_fixed < $minimum_read_count){
             $Adenine_count_fixed = 0
         }
-        if ($Thymine_count_fixed <= $minimum_allele_count){
+        if ($Thymine_count_fixed < $minimum_read_count){
             $Thymine_count_fixed = 0
         }
-        if ($Cytosine_count_fixed <= $minimum_allele_count){
+        if ($Cytosine_count_fixed < $minimum_read_count){
             $Cytosine_count_fixed = 0
         }
-        if ($Guanine_count_fixed <= $minimum_allele_count){
+        if ($Guanine_count_fixed < $minimum_read_count){
             $Guanine_count_fixed = 0
         }
-        if ($Deletion_count_fixed <= $minimum_allele_count){
+        if ($Deletion_count_fixed < $minimum_read_count){
             $Deletion_count_fixed = 0
         }
-        if ($Adenine_count_polymorphic <= $minimum_allele_count){
+        if ($Adenine_count_polymorphic < $minimum_read_count){
             $Adenine_count_polymorphic = 0
         }
-        if ($Thymine_count_polymorphic <= $minimum_allele_count){
+        if ($Thymine_count_polymorphic < $minimum_read_count){
             $Thymine_count_polymorphic = 0
         }
-        if ($Cytosine_count_polymorphic <= $minimum_allele_count){
+        if ($Cytosine_count_polymorphic < $minimum_read_count){
             $Cytosine_count_polymorphic = 0
         }
-        if ($Guanine_count_polymorphic <= $minimum_allele_count){
+        if ($Guanine_count_polymorphic < $minimum_read_count){
             $Guanine_count_polymorphic = 0
         }
-        if ($Deletion_count_polymorphic <= $minimum_allele_count){
+        if ($Deletion_count_polymorphic < $minimum_read_count){
             $Deletion_count_polymorphic = 0
         }
         
@@ -938,6 +938,6 @@ sub Usage
     my $command = $0;
     $command =~ s#^[^\s]/##;
     printf STDERR "@_\n" if ( @_ );
-    printf STDERR "\nperl Sex_SNP_finder_GA.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --minimum_read_depth=[value greater than 0] --maximum_read_depth=[value greater than the minimum_read_depth] --minimum_allele_count=[minimum number of allele counts at a site before an allele is considered real and not a sequencing error] --sex_SNP_finder_window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.igv --fst_output_file=fst_output_file.igv --dxy_output_file=dxy_output_file.igv --da_output_file=da_output_file.igv --cp_output_file=cp_output_file.igv --neis_D_output_file=neis_D_output_file.igv--description=description of file to be used in IGV header [--help|-?]\n\n";
+    printf STDERR "\nperl Sex_SNP_finder_GA.pl --input_file=input_file.sync --output_file=output_file.igv --fixed_population=pool[1 or 2] --fixed_threshold=[value between 0 and 1] --minimum_polymorphic_frequency=[value between 0 and 1] --maximum_polymorphic_frequency=[value between 0 and 1] --minimum_read_depth=[value greater than 0] --maximum_read_depth=[value greater than the minimum_read_depth] --minimum_read_count=[minimum number of read counts at a site before an allele is considered real and not a sequencing error] --sex_SNP_finder_window_size=[value greater than 0] --non_overlapping_window_output_file=non_overlapping_window_output_file.igv --fst_output_file=fst_output_file.igv --dxy_output_file=dxy_output_file.igv --da_output_file=da_output_file.igv --cp_output_file=cp_output_file.igv --neis_D_output_file=neis_D_output_file.igv--description=description of file to be used in IGV header [--help|-?]\n\n";
     exit;
 }
