@@ -6,7 +6,11 @@ Sex_SNP_finder.pl was designed to find nucleotides that were fixed at a site in 
 
 ### Citation
 
-Please cite Sex_SNP_finder as:
+If you are using the latest verion of Sex_SNP_finder (Sex_SNP_finder_GA.pl) please cite:
+
+Gammerdinger WJ, Conte MA, Baroiller JF, D'Cotta H, Kocher TD: Comparative analysis of a sex chromosome from the blackchin tilapia, Sarotherodon melanotheron. BMC Genomics 17(1):808.
+
+Otherwise, cite Sex_SNP_finder as:
 
 Gammerdinger WJ, Conte MA, Acquah EA, Roberts RB, Kocher TD: Structure and decay of a proto-Y region in Tilapia, Oreochromis niloticus. BMC Genomics 2014 15:975.
 
