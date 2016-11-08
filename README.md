@@ -8,7 +8,7 @@ Sex_SNP_finder.pl was designed to find nucleotides that were fixed at a site in 
 
 If you are using the latest verion of Sex_SNP_finder (Sex_SNP_finder_GA.pl) please cite:
 
-Gammerdinger WJ, Conte MA, Baroiller JF, D'Cotta H, Kocher TD: Comparative analysis of a sex chromosome from the blackchin tilapia, Sarotherodon melanotheron. BMC Genomics 17(1):808.
+Gammerdinger WJ, Conte MA, Baroiller JF, D'Cotta H, Kocher TD: Comparative analysis of a sex chromosome from the blackchin tilapia, Sarotherodon melanotheron. BMC Genomics 2016 17(1):808.
 
 Otherwise, cite Sex_SNP_finder as:
 
